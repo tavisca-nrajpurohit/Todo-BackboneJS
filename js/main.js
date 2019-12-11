@@ -9,13 +9,6 @@ const TodoList = Backbone.Collection.extend({
       }
 });
 
-// const todoList = new TodoList([
-//     new TodoItem( { text:'Buy Vegetables from the Market', status:'Todo' } ),
-//     new TodoItem( { text:'Buy Fruits from the Super-Market', status:'Todo' } ),
-//     new TodoItem( { text:'Buy Stationery', status:'Done' } ),
-//     new TodoItem( { text:'Buy Vehicles from the Auto Store', status:'Todo' } ),
-// ]);
-
 let todoList = new TodoList();
 todoList.fetch({
 	success: function(response) {
@@ -35,6 +28,7 @@ todoList.fetch({
 });
 
 const TodoItemView = Backbone.View.extend({
+    template: JST["list-item"],
     attributes : function () {
         return {
         class: "todo-item-"+this.model.get('status'),
@@ -42,7 +36,7 @@ const TodoItemView = Backbone.View.extend({
         };
       },
     render: function() {
-        this.$el.html(this.model.get('text'));
+        this.$el.html(this.template(this.model.toJSON()));
         console.log(this.model.cid);
         return this;
     }
